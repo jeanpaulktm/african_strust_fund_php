@@ -1,0 +1,370 @@
+/* ============================================================
+   AFRICAN TRUST FUND — Dark Premium UI
+   Anthracite #0B0E14 / #121824 · Cartes #1A2130 / #1E293B
+   Or #F5B800 / #D4AF37 · Marine #0D1B5E
+   ============================================================ */
+
+:root{
+  --bg-0:#0B0E14;
+  --bg-1:#121824;
+  --card:#1A2130;
+  --card-2:#1E293B;
+  --border:rgba(255,255,255,.07);
+  --border-strong:rgba(245,184,0,.35);
+  --gold:#F5B800;
+  --gold-2:#D4AF37;
+  --gold-soft:rgba(245,184,0,.15);
+  --blue-deep:#0D1B5E;
+  --blue-mid:#1E3A8A;
+  --green:#10B981;
+  --red:#EF4444;
+  --text:#E8ECF3;
+  --muted:#8A93A6;
+  --radius:20px;
+  --radius-sm:14px;
+  --shadow:0 20px 60px rgba(0,0,0,.55);
+  --glow:0 0 30px rgba(245,184,0,.25);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Inter','Segoe UI',system-ui,sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(13,27,94,.55), transparent 60%),
+    radial-gradient(1000px 500px at 100% 100%, rgba(245,184,0,.08), transparent 55%),
+    var(--bg-0);
+  color:var(--text);
+  line-height:1.6;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--gold);text-decoration:none;transition:.2s}
+a:hover{color:#ffd54a;text-shadow:0 0 12px rgba(245,184,0,.4)}
+
+/* ============================================================
+   HEADER UNIVERSEL
+   ============================================================ */
+.atf-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:14px clamp(16px,4vw,42px);
+  background:rgba(11,14,20,.75);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+.brand{display:flex;align-items:center;gap:14px}
+.brand .logo{
+  height:52px;width:52px;
+  object-fit:contain;
+  border-radius:14px;
+  background:linear-gradient(135deg,#0D1B5E,#1E293B);
+  padding:4px;
+  border:1px solid var(--border-strong);
+  box-shadow:var(--glow);
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.15}
+.brand-name{
+  font-weight:800;font-size:1rem;letter-spacing:1.2px;
+  background:linear-gradient(90deg,var(--gold),#FFE082,var(--gold-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.brand-slogan{
+  font-size:.72rem;color:var(--muted);font-style:italic;letter-spacing:.3px;
+}
+
+.atf-nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.user-chip{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 14px;border-radius:999px;
+  background:var(--card);border:1px solid var(--border);
+  font-size:.85rem;
+}
+.user-chip .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 10px var(--green);
+}
+
+/* ============================================================
+   BOUTONS
+   ============================================================ */
+.btn-gold,.btn-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 22px;border-radius:999px;
+  font-weight:700;font-size:.9rem;letter-spacing:.3px;
+  border:none;cursor:pointer;transition:.25s;
+  text-decoration:none;
+}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold-2));
+  color:#0B0E14;
+  box-shadow:0 8px 24px rgba(245,184,0,.35);
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(245,184,0,.5);color:#0B0E14}
+.btn-gold.full{width:100%;padding:14px}
+.btn-ghost{
+  background:var(--card);color:var(--text);
+  border:1px solid var(--border);
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ============================================================
+   BADGES
+   ============================================================ */
+.badge{
+  display:inline-block;padding:6px 14px;border-radius:999px;
+  font-size:.72rem;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;
+  background:var(--card-2);color:var(--muted);
+  border:1px solid var(--border);
+}
+.badge.gold{background:var(--gold-soft);color:var(--gold);border-color:var(--border-strong)}
+.badge.blue{background:rgba(30,58,138,.25);color:#93B4FF;border-color:rgba(30,58,138,.5)}
+.badge.green{background:rgba(16,185,129,.15);color:var(--green);border-color:rgba(16,185,129,.4)}
+
+/* ============================================================
+   HERO / LANDING
+   ============================================================ */
+.hero{
+  display:grid;
+  grid-template-columns:1.15fr 1fr;
+  gap:clamp(30px,6vw,80px);
+  align-items:center;
+  padding:clamp(40px,7vw,90px) clamp(20px,6vw,100px);
+  max-width:1500px;margin:0 auto;
+}
+.hero-text h1{
+  font-size:clamp(2rem,4.5vw,3.6rem);
+  line-height:1.1;font-weight:800;margin:18px 0 14px;
+}
+.hero-text h1 .gold{
+  background:linear-gradient(90deg,var(--gold),#FFE082);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.slogan{
+  font-size:1.1rem;color:var(--muted);font-style:italic;
+  border-left:3px solid var(--gold);padding-left:14px;margin:16px 0 24px;
+}
+.lead{color:var(--muted);max-width:560px;margin-bottom:30px}
+
+.cta-group{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px}
+.stats-row{display:flex;gap:30px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column}
+.stat strong{font-size:1.6rem;color:var(--gold);font-weight:800}
+.stat span{color:var(--muted);font-size:.85rem}
+
+/* ============================================================
+   COMPTEUR CIRCULAIRE
+   ============================================================ */
+.hero-visual{display:flex;flex-direction:column;align-items:center;gap:20px}
+.circle-wrapper{
+  position:relative;width:min(320px,80vw);aspect-ratio:1/1;
+  cursor:pointer;transition:transform .4s;
+  outline:none;
+}
+.circle-wrapper:hover{transform:scale(1.04)}
+
+.progress-ring{width:100%;height:100%;transform:rotate(-90deg)}
+.ring-bg{
+  fill:none;stroke:rgba(255,255,255,.06);stroke-width:14;
+}
+.ring-fg{
+  fill:none;stroke:url(#goldGrad);stroke-width:14;stroke-linecap:round;
+  filter:drop-shadow(0 0 14px rgba(245,184,0,.6));
+  transition:stroke-dashoffset .12s linear;
+}
+
+.circle-center{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+}
+#counterValue{
+  font-size:clamp(2.4rem,6vw,3.6rem);
+  font-weight:800;color:#fff;line-height:1;
+  text-shadow:0 0 25px rgba(245,184,0,.35);
+}
+#counterValue small{font-size:1.4rem;color:var(--gold);margin-left:2px}
+.circle-label{color:var(--muted);font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;margin-top:10px}
+
+.pulse-ring{
+  position:absolute;inset:-10px;border-radius:50%;
+  border:1px solid rgba(245,184,0,.4);
+  animation:pulse 3s ease-out infinite;
+  pointer-events:none;
+}
+@keyframes pulse{
+  0%{transform:scale(.95);opacity:.7}
+  100%{transform:scale(1.15);opacity:0}
+}
+.counter-caption{color:var(--muted);font-size:.85rem;font-style:italic}
+
+/* ============================================================
+   AUTH (formulaires dark)
+   ============================================================ */
+.dark-auth{min-height:100vh}
+.auth-wrapper{
+  display:flex;justify-content:center;align-items:flex-start;
+  padding:clamp(20px,4vw,60px) clamp(16px,4vw,40px);
+}
+.auth-wrapper.wide{justify-content:center}
+.auth-card{
+  width:100%;max-width:460px;
+  background:linear-gradient(180deg,var(--card),var(--card-2));
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:clamp(24px,4vw,40px);
+  box-shadow:var(--shadow);
+}
+.auth-wrapper.wide .auth-card{max-width:820px}
+
+.auth-head{margin-bottom:26px;text-align:center}
+.auth-head h1{font-size:1.7rem;margin:14px 0 6px;font-weight:800}
+.muted{color:var(--muted);font-size:.9rem}
+.center{text-align:center}
+.hint{color:var(--muted);font-size:.78rem;margin-top:6px}
+
+form{display:flex;flex-direction:column;gap:18px}
+fieldset{
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:18px;display:flex;flex-direction:column;gap:14px;
+}
+legend{
+  padding:0 10px;color:var(--gold);
+  font-size:.72rem;font-weight:800;
+  letter-spacing:1.5px;text-transform:uppercase;
+}
+
+.field{display:flex;flex-direction:column;gap:6px}
+.field>span{font-size:.8rem;color:var(--muted);font-weight:600;letter-spacing:.3px}
+
+.input-wrap{position:relative;display:flex;align-items:center}
+.input-wrap .ico{
+  position:absolute;left:14px;width:18px;height:18px;
+  fill:var(--muted);pointer-events:none;
+}
+.input-wrap input{padding-left:44px !important;padding-right:44px}
+.eye{
+  position:absolute;right:10px;background:transparent;border:none;
+  color:var(--muted);font-size:1rem;cursor:pointer;padding:6px;
+}
+
+input[type=text],input[type=email],input[type=password],input[type=file],textarea,select{
+  width:100%;
+  padding:13px 16px;
+  background:var(--bg-1);
+  border:1px solid var(--border);
+  border-radius:12px;
+  color:var(--text);
+  font-size:.92rem;
+  font-family:inherit;
+  transition:.2s;
+}
+input::placeholder,textarea::placeholder{color:#5A6275}
+input:focus,textarea:focus,select:focus{
+  outline:none;border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(245,184,0,.15);
+  background:#0F1520;
+}
+input[type=file]{padding:10px;cursor:pointer}
+input[type=file]::file-selector-button{
+  background:var(--gold);color:#0B0E14;border:none;
+  padding:8px 14px;border-radius:8px;font-weight:700;margin-right:10px;cursor:pointer;
+}
+textarea{resize:vertical;min-height:60px;font-family:inherit}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* Barre robustesse mot de passe */
+.pwd-meter{height:6px;background:var(--bg-1);border-radius:99px;overflow:hidden;margin-top:-8px}
+.pwd-meter #pwdBar{height:100%;width:0;background:var(--red);transition:.3s;border-radius:99px}
+
+/* Alerts */
+.alert{
+  padding:14px 18px;border-radius:12px;
+  font-size:.88rem;margin-bottom:16px;
+  border:1px solid transparent;
+}
+.alert ul{margin-left:18px}
+.alert.error{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.35);color:#FCA5A5}
+.alert.success{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.35);color:#6EE7B7}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.atf-footer{
+  text-align:center;padding:28px 20px;
+  color:var(--muted);font-size:.82rem;
+  border-top:1px solid var(--border);margin-top:60px;
+}
+
+/* ============================================================
+   DASHBOARD (cartes KPI)
+   ============================================================ */
+.dash{padding:clamp(20px,4vw,40px);max-width:1500px;margin:0 auto}
+.dash h2{margin-bottom:20px;font-weight:800;font-size:1.4rem}
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;margin-bottom:32px;
+}
+.kpi{
+  background:linear-gradient(160deg,var(--card),var(--card-2));
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;position:relative;overflow:hidden;
+}
+.kpi::after{
+  content:"";position:absolute;top:-40%;right:-20%;
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,184,0,.12),transparent 70%);
+}
+.kpi .label{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:1px}
+.kpi .value{font-size:1.9rem;font-weight:800;margin-top:8px;color:#fff}
+.kpi .value.gold{color:var(--gold);text-shadow:0 0 20px rgba(245,184,0,.35)}
+
+.card{
+  background:linear-gradient(180deg,var(--card),var(--card-2));
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;margin-bottom:22px;
+}
+
+/* Tableau transactions */
+.table-wrap{overflow-x:auto;border-radius:14px}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead{background:var(--bg-1)}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+tr:hover td{background:rgba(255,255,255,.02)}
+.tag{
+  display:inline-block;padding:4px 10px;border-radius:99px;
+  font-size:.72rem;font-weight:700;
+}
+.tag.depot{background:rgba(16,185,129,.15);color:#6EE7B7}
+.tag.retrait{background:rgba(239,68,68,.15);color:#FCA5A5}
+.tag.virement{background:rgba(245,184,0,.15);color:var(--gold)}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px){
+  .hero{grid-template-columns:1fr;text-align:center}
+  .hero .cta-group,.hero .stats-row{justify-content:center}
+  .slogan{border:none;padding:0}
+  .brand-slogan{display:none}
+}
+@media (max-width: 600px){
+  .atf-header{padding:12px 16px;flex-wrap:wrap}
+  .brand .logo{height:44px;width:44px}
+  .brand-name{font-size:.85rem}
+  .grid-2{grid-template-columns:1fr}
+  .auth-card{border-radius:18px}
+  .btn-gold,.btn-ghost{padding:11px 18px;font-size:.85rem}
+}

@@ -1,0 +1,617 @@
+/* ============================================================
+   CARTE MEMBRE ATF — Premium avec QR Code et Photo
+   ============================================================ */
+
+.carte-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Carte principale */
+.carte-atf {
+  width: 480px;
+  height: 300px;
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 20px 60px rgba(0,0,0,.6),
+    0 0 0 1px rgba(255,255,255,.08) inset;
+  transform-style: preserve-3d;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+  background: #0B0E14;
+  font-family: 'Inter', 'Segoe UI', monospace;
+  color: #fff;
+}
+
+.carte-atf:hover {
+  transform: translateY(-8px) rotateX(3deg);
+  box-shadow: 
+    0 30px 80px rgba(245,184,0,.35),
+    0 0 0 1px rgba(245,184,0,.35) inset;
+}
+
+/* Fonds par type */
+.carte-atf.client {
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(245,184,0,.15), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(30,64,175,.35), transparent 60%),
+    linear-gradient(135deg, #0D1B5E 0%, #0B0E14 50%, #1a1f2e 100%);
+}
+
+.carte-atf.caissier {
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(16,185,129,.15), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(16,185,129,.25), transparent 60%),
+    linear-gradient(135deg, #064e3b 0%, #0B0E14 50%, #1a1f2e 100%);
+}
+
+.carte-atf.actionnaire {
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(139,92,246,.2), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(139,92,246,.2), transparent 60%),
+    linear-gradient(135deg, #4c1d95 0%, #0B0E14 50%, #1a1f2e 100%);
+}
+
+/* Motif décoratif */
+.carte-atf::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 10% 90%, rgba(245,184,0,.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(245,184,0,.05) 0%, transparent 40%),
+    repeating-linear-gradient(
+      45deg,
+      transparent 0,
+      transparent 20px,
+      rgba(255,255,255,.01) 20px,
+      rgba(255,255,255,.01) 21px
+    );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Particules dorées */
+.carte-atf::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle, rgba(245,184,0,.03) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size: 40px 40px, 60px 60px;
+  animation: shimmer 20s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(-40px, -40px); }
+}
+
+/* Contenu */
+.carte-contenu {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 26px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* TOP : Logo + Badge */
+.carte-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.carte-logo-atf {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carte-logo-atf img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  padding: 3px;
+  border: 2px solid #F5B800;
+  object-fit: contain;
+  box-shadow: 0 0 20px rgba(245,184,0,.4);
+}
+
+.carte-marque .nom {
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  background: linear-gradient(90deg, #F5B800, #FFE082, #D4AF37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1.1;
+}
+
+.carte-marque .type {
+  font-size: 9px;
+  color: rgba(255,255,255,.6);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+/* Badge type */
+.carte-badge {
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: rgba(245,184,0,.15);
+  color: #F5B800;
+  border: 1px solid rgba(245,184,0,.4);
+  backdrop-filter: blur(10px);
+}
+
+.carte-atf.caissier .carte-badge {
+  background: rgba(16,185,129,.15);
+  color: #6EE7B7;
+  border-color: rgba(16,185,129,.4);
+}
+
+.carte-atf.actionnaire .carte-badge {
+  background: rgba(139,92,246,.2);
+  color: #A78BFA;
+  border-color: rgba(139,92,246,.4);
+}
+
+/* MIDDLE : Puche + Numéro + Photo */
+.carte-middle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.carte-middle-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.carte-puce {
+  width: 50px;
+  height: 38px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #D4AF37, #F5B800, #B8860B);
+  position: relative;
+  box-shadow: 
+    0 2px 10px rgba(0,0,0,.5),
+    0 0 0 1px rgba(255,255,255,.25) inset;
+}
+
+.carte-puce::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 3px;
+  background: 
+    repeating-linear-gradient(
+      0deg, transparent 0, transparent 3px,
+      rgba(0,0,0,.35) 3px, rgba(0,0,0,.35) 4px
+    ),
+    repeating-linear-gradient(
+      90deg, transparent 0, transparent 4px,
+      rgba(0,0,0,.35) 4px, rgba(0,0,0,.35) 5px
+    );
+  opacity: .65;
+}
+
+.carte-numero {
+  font-family: 'Courier New', monospace;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.7);
+  display: flex;
+  gap: 16px;
+}
+
+/* Photo du titulaire */
+.carte-photo {
+  width: 80px;
+  height: 96px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid rgba(245,184,0,.5);
+  background: linear-gradient(135deg, rgba(11,14,20,.9), rgba(30,41,59,.9));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 
+    0 8px 20px rgba(0,0,0,.5),
+    0 0 30px rgba(245,184,0,.15);
+  position: relative;
+}
+
+.carte-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carte-photo .photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #F5B800;
+}
+
+.carte-photo .photo-placeholder .initiales {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.carte-photo .photo-placeholder .lbl {
+  font-size: 7px;
+  color: rgba(255,255,255,.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* BOTTOM : Nom + Expiration + QR */
+.carte-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.carte-bottom-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.carte-nom {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.carte-nom .lbl,
+.carte-expiration .lbl {
+  font-size: 8px;
+  color: rgba(255,255,255,.5);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+
+.carte-nom .val {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.carte-expiration .val {
+  font-size: 14px;
+  font-weight: 800;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.carte-expiration {
+  text-align: left;
+}
+
+/* QR Code */
+.carte-qr {
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+  background: #fff;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 
+    0 8px 20px rgba(0,0,0,.4),
+    0 0 20px rgba(245,184,0,.2);
+}
+
+.carte-qr canvas,
+.carte-qr img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Hologramme */
+.carte-hologramme {
+  position: absolute;
+  bottom: 26px;
+  right: 110px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #F5B800, #FFE082, #D4AF37, #B8860B, #F5B800,
+    #FFE082, #D4AF37, #B8860B, #F5B800
+  );
+  box-shadow: 
+    0 0 20px rgba(245,184,0,.5),
+    0 0 0 2px rgba(255,255,255,.15) inset;
+  z-index: 2;
+  animation: holoSpin 8s linear infinite;
+}
+
+@keyframes holoSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.carte-hologramme::before {
+  content: "ATF";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+  color: #0B0E14;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 2px rgba(255,255,255,.3);
+}
+
+/* Marque ATF (style VISA) */
+.carte-visa-brand {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  font-size: 26px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #F5B800, #FFE082);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  z-index: 2;
+  text-shadow: 0 2px 8px rgba(245,184,0,.3);
+}
+
+/* ============================================================
+   VERSO DE LA CARTE
+   ============================================================ */
+.carte-verso {
+  width: 480px;
+  height: 300px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #0B0E14, #1a1f2e);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+
+.carte-verso .bande-magnetique {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  right: 0;
+  height: 55px;
+  background: linear-gradient(180deg, #1a1a1a, #0a0a0a, #1a1a1a);
+  box-shadow: 0 4px 12px rgba(0,0,0,.5);
+}
+
+.carte-verso .zone-signature {
+  position: absolute;
+  top: 135px;
+  left: 30px;
+  right: 30px;
+  height: 45px;
+  background: repeating-linear-gradient(
+    0deg,
+    #f0f0f0 0, #f0f0f0 14px,
+    #e0e0e0 14px, #e0e0e0 16px
+  );
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  color: #333;
+  font-family: 'Brush Script MT', 'Caveat', cursive;
+  font-size: 20px;
+  font-style: italic;
+}
+
+.carte-verso .mention {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+  right: 30px;
+  font-size: 9px;
+  color: rgba(255,255,255,.4);
+  line-height: 1.6;
+}
+
+.carte-verso .mention strong {
+  color: rgba(245,184,0,.7);
+}
+
+/* ============================================================
+   BOUTONS
+   ============================================================ */
+.carte-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.carte-actions .btn {
+  padding: 13px 24px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .25s;
+}
+
+.carte-actions .btn-print {
+  background: linear-gradient(135deg, #F5B800, #D4AF37);
+  color: #0B0E14;
+  box-shadow: 0 8px 24px rgba(245,184,0,.4);
+}
+
+.carte-actions .btn-print:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(245,184,0,.6);
+}
+
+.carte-actions .btn-back {
+  background: rgba(255,255,255,.1);
+  color: #E8ECF3;
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+.carte-actions .btn-back:hover {
+  background: rgba(255,255,255,.2);
+}
+
+/* ============================================================
+   IMPRESSION
+   ============================================================ */
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  body {
+    background: #fff !important;
+    padding: 0 !important;
+  }
+
+  .carte-wrapper {
+    padding: 0;
+    gap: 30px;
+  }
+
+  .carte-actions,
+  .no-print {
+    display: none !important;
+  }
+
+  .carte-atf,
+  .carte-verso {
+    box-shadow: none !important;
+    transform: none !important;
+    page-break-inside: avoid;
+    margin: 0 auto;
+    border: 1px solid #333;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .carte-verso {
+    page-break-before: always;
+  }
+
+  .carte-atf:hover {
+    transform: none;
+  }
+
+  .carte-atf::after,
+  .carte-hologramme {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 520px) {
+  .carte-atf,
+  .carte-verso {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+  }
+
+  .carte-numero {
+    font-size: 18px;
+    letter-spacing: 2px;
+    gap: 10px;
+  }
+
+  .carte-photo {
+    width: 60px;
+    height: 72px;
+  }
+
+  .carte-qr {
+    width: 55px;
+    height: 55px;
+  }
+
+  .carte-nom .val,
+  .carte-expiration .val {
+    font-size: 12px;
+  }
+
+  .carte-logo-atf img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .carte-marque .nom {
+    font-size: 11px;
+  }
+
+  .carte-visa-brand {
+    font-size: 20px;
+    bottom: 24px;
+    right: 24px;
+  }
+
+  .carte-hologramme {
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+    right: 90px;
+  }
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Test Chat IA ATF</title>
+</head>
+<body style="font-family:Arial;background:#0B0E14;color:#fff;padding:30px;max-width:800px;margin:0 auto">
+
+<h1 style="color:#F5B800">🧪 Test Chat IA ATF</h1>
+
+<div id="status" style="padding:14px;background:#1A2130;border-radius:8px;margin:20px 0;font-weight:bold">
+    ⏳ Initialisation...
+</div>
+
+<div id="messages" style="background:#1A2130;padding:20px;border-radius:12px;height:400px;overflow-y:auto;margin-bottom:20px;border:1px solid #333">
+    <p><strong style="color:#F5B800">Bot :</strong> Bonjour ! Tapez un message ci-dessous.</p>
+</div>
+
+<div style="display:flex;gap:10px">
+    <input type="text" id="input" placeholder="Votre message..." 
+           style="flex:1;padding:14px;background:#0B0E14;color:#fff;border:1px solid #333;border-radius:8px;font-size:15px">
+    <button onclick="envoyer()" id="btn"
+            style="padding:14px 28px;background:#F5B800;color:#000;border:none;border-radius:8px;font-weight:bold;font-size:15px;cursor:pointer">
+        Envoyer
+    </button>
+</div>
+
+<script>
+/* ============================================================
+   VARIABLES
+   ============================================================ */
+var CSRF = null;
+var API_URL = '/african-trust-fund/api/chat_ia.php';
+var CSRF_URL = '/african-trust-fund/api/get_csrf.php';
+
+/* ============================================================
+   INITIALISATION — Récupérer le CSRF
+   ============================================================ */
+function init() {
+    console.log('🔍 Récupération du CSRF...');
+    
+    fetch(CSRF_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            console.log('📦 Réponse CSRF :', data);
+            
+            if (data.success && data.csrf) {
+                CSRF = data.csrf;
+                setStatus('✅ Prêt ! Envoyez un message.', '#10B981');
+                console.log('✅ CSRF chargé :', CSRF.substring(0, 20) + '...');
+            } else {
+                setStatus('❌ Erreur CSRF : ' + (data.error || 'inconnu'), '#EF4444');
+            }
+        })
+        .catch(function(err) {
+            console.error('❌ Erreur :', err);
+            setStatus('❌ Impossible de charger le CSRF : ' + err.message, '#EF4444');
+        });
+}
+
+/* ============================================================
+   ENVOYER UN MESSAGE
+   ============================================================ */
+function envoyer() {
+    var input = document.getElementById('input');
+    var btn = document.getElementById('btn');
+    var messages = document.getElementById('messages');
+    var message = input.value.trim();
+
+    console.log('📤 Envoi :', message);
+    console.log('🔑 CSRF :', CSRF ? CSRF.substring(0, 20) + '...' : 'MANQUANT');
+
+    if (!message) return;
+    
+    if (!CSRF) {
+        alert('Le CSRF n\'est pas encore chargé. Patientez 2 secondes.');
+        return;
+    }
+
+    /* Afficher le message utilisateur */
+    messages.innerHTML += '<p style="text-align:right;color:#F5B800"><strong>Vous :</strong> ' + escapeHtml(message) + '</p>';
+    input.value = '';
+    btn.disabled = true;
+
+    /* Message "typing" */
+    messages.innerHTML += '<p id="typing" style="color:#8A93A6"><em>⏳ L\'IA réfléchit...</em></p>';
+    messages.scrollTop = messages.scrollHeight;
+
+    /* Appel API */
+    fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            message: message,
+            historique: [],
+            csrf: CSRF
+        })
+    })
+    .then(function(r) {
+        console.log('📡 Status HTTP :', r.status);
+        return r.text();
+    })
+    .then(function(texte) {
+        console.log('📥 Réponse brute :', texte);
+        
+        /* Retirer le typing */
+        var typing = document.getElementById('typing');
+        if (typing) typing.remove();
+
+        /* Parser JSON */
+        var data;
+        try {
+            data = JSON.parse(texte);
+        } catch (e) {
+            messages.innerHTML += '<p style="color:#FCA5A5"><strong>Erreur :</strong> Réponse non-JSON :<br>' + escapeHtml(texte.substring(0, 200)) + '</p>';
+            btn.disabled = false;
+            return;
+        }
+
+        /* Afficher la réponse */
+        if (data.success && data.reponse) {
+            messages.innerHTML += '<p><strong style="color:#F5B800">Bot :</strong> ' + escapeHtml(data.reponse) + '</p>';
+            setStatus('✅ Réponse reçue à ' + (data.timestamp || 'maintenant'), '#10B981');
+        } else {
+            messages.innerHTML += '<p style="color:#FCA5A5"><strong>Erreur :</strong> ' + escapeHtml(data.error || 'Erreur inconnue') + '</p>';
+            setStatus('❌ ' + (data.error || 'Erreur'), '#EF4444');
+        }
+
+        messages.scrollTop = messages.scrollHeight;
+        btn.disabled = false;
+        input.focus();
+    })
+    .catch(function(err) {
+        console.error('❌ Erreur fetch :', err);
+        
+        var typing = document.getElementById('typing');
+        if (typing) typing.remove();
+
+        messages.innerHTML += '<p style="color:#FCA5A5"><strong>Erreur réseau :</strong> ' + escapeHtml(err.message) + '</p>';
+        setStatus('❌ ' + err.message, '#EF4444');
+        btn.disabled = false;
+    });
+}
+
+/* ============================================================
+   UTILITAIRES
+   ============================================================ */
+function setStatus(message, color) {
+    var s = document.getElementById('status');
+    s.textContent = message;
+    s.style.background = color;
+    s.style.color = (color === '#10B981' || color === '#F5B800') ? '#0B0E14' : '#fff';
+}
+
+function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+/* ============================================================
+   ÉVÉNEMENTS
+   ============================================================ */
+document.getElementById('input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') envoyer();
+});
+
+/* Lancer l'init au chargement */
+window.addEventListener('load', init);
+</script>
+
+</body>
+</html>

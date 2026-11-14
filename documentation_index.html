@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>African Trust Fund - Documentation Base de Données</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0D1B5E, #1E293B);
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid #F5B800;
+        }
+        header h1 {
+            color: #0D1B5E;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        header p {
+            color: #666;
+            font-size: 14px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .card.primary {
+            border-top: 4px solid #0D1B5E;
+        }
+        .card.success {
+            border-top: 4px solid #10B981;
+        }
+        .card.warning {
+            border-top: 4px solid #F5B800;
+        }
+        .card.info {
+            border-top: 4px solid #3B82F6;
+        }
+        .card h3 {
+            color: #0D1B5E;
+            margin-bottom: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .card .file-info {
+            font-size: 11px;
+            color: #999;
+            margin: 10px 0;
+            padding: 8px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #0D1B5E;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .card a:hover {
+            background: #1E293B;
+        }
+        .stats {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .stat {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        .stat-number {
+            font-size: 28px;
+            font-weight: 900;
+            color: #0D1B5E;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .tabs {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .file-list {
+            list-style: none;
+        }
+        .file-list li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+        .file-list li:last-child {
+            border-bottom: none;
+        }
+        .file-icon {
+            margin-right: 10px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #F5B800;
+            color: #0D1B5E;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .success-badge {
+            background: #10B981;
+            color: white;
+        }
+        footer {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .emoji { font-size: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏛️ African Trust Fund - Documentation Base de Données</h1>
+            <p>Plateforme complète de gestion d'actifs | Version 1.0 | 14 Novembre 2024</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">27</div>
+                <div class="stat-label">Tables créées</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">18</div>
+                <div class="stat-label">Relations FK</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">60+</div>
+                <div class="stat-label">Indices</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">9</div>
+                <div class="stat-label">Paramètres</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Produits prêt</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">✅</div>
+                <div class="stat-label">Prêt production</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card primary">
+                <h3><span class="emoji">🚀</span> Démarrage Rapide</h3>
+                <p>Commencez en 2 minutes ! Guide ultra-rapide pour importer la base de données.</p>
+                <div class="file-info">📄 QUICK_START.txt | 5 KB</div>
+                <p style="font-size: 12px; color: #999;">Installation en 3 étapes | Identifiants par défaut</p>
+                <a href="../QUICK_START.txt" target="_blank">📖 Lire le document</a>
+            </div>
+
+            <div class="card success">
+                <h3><span class="emoji">📦</span> Schéma SQL Complet</h3>
+                <p>Le fichier à importer dans MySQL pour créer toute la base de données. Prêt à l'emploi.</p>
+                <div class="file-info">💾 database/schema_complete.sql | 28 KB</div>
+                <p style="font-size: 12px; color: #999;">27 tables + données initiales | UTF8MB4</p>
+                <a href="../database/schema_complete.sql" download>💾 Télécharger</a>
+            </div>
+
+            <div class="card info">
+                <h3><span class="emoji">📖</span> Guide Installation</h3>
+                <p>Guide complet avec 3 méthodes d'installation, dépannage et vérification post-import.</p>
+                <div class="file-info">📄 GUIDE_INSTALLATION_BD.md | 9 KB</div>
+                <p style="font-size: 12px; color: #999;">phpMyAdmin | CLI | Sécurité</p>
+                <a href="../GUIDE_INSTALLATION_BD.md" target="_blank">📖 Lire le guide</a>
+            </div>
+
+            <div class="card warning">
+                <h3><span class="emoji">🔍</span> Analyse Détaillée</h3>
+                <p>Documentation complète de la structure avec flux métier, taux et requêtes utiles.</p>
+                <div class="file-info">📄 ANALYSE_BD_COMPLET.md | 13 KB</div>
+                <p style="font-size: 12px; color: #999;">Structure | Flux | Paramètres</p>
+                <a href="../ANALYSE_BD_COMPLET.md" target="_blank">📖 Lire l'analyse</a>
+            </div>
+
+            <div class="card primary">
+                <h3><span class="emoji">📊</span> Diagramme Relationnel</h3>
+                <p>Schéma ER visuel montrant toutes les relations entre les 27 tables.</p>
+                <div class="file-info">📄 DIAGRAMME_ER_COMPLET.md | 20 KB</div>
+                <p style="font-size: 12px; color: #999;">Cardinalité | Flux données | Contraintes</p>
+                <a href="../DIAGRAMME_ER_COMPLET.md" target="_blank">📖 Voir le diagramme</a>
+            </div>
+
+            <div class="card success">
+                <h3><span class="emoji">📋</span> Référence Colonnes</h3>
+                <p>Listing complet de toutes les colonnes de chaque table avec leurs types.</p>
+                <div class="file-info">📄 REFERENCE_COLONNES.md | 16 KB</div>
+                <p style="font-size: 12px; color: #999;">Toutes les tables | Types SQL</p>
+                <a href="../REFERENCE_COLONNES.md" target="_blank">📖 Voir la référence</a>
+            </div>
+
+            <div class="card info">
+                <h3><span class="emoji">📄</span> README Complet</h3>
+                <p>Guide général avec résumé, données initiales et checklist d'installation.</p>
+                <div class="file-info">📄 README_BD.md | 13 KB</div>
+                <p style="font-size: 12px; color: #999;">Résumé | Checklist | Suivi</p>
+                <a href="../README_BD.md" target="_blank">📖 Lire le README</a>
+            </div>
+
+            <div class="card warning">
+                <h3><span class="emoji">⚙️</span> Résumé Technique</h3>
+                <p>Document technique détaillé avec toutes les informations de reconstruction.</p>
+                <div class="file-info">📄 RECONSTRUCTION_RESUME.txt | 13 KB</div>
+                <p style="font-size: 12px; color: #999;">Technique | Détails | Performance</p>
+                <a href="../RECONSTRUCTION_RESUME.txt" target="_blank">📖 Lire le résumé</a>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <h3>📊 Les 27 Tables (Vue d'ensemble)</h3>
+            <ul class="file-list">
+                <li><span>Gestion des utilisateurs</span> <span>4 tables</span></li>
+                <li style="padding-left: 30px;"><span>• Admin_Principal</span></li>
+                <li style="padding-left: 30px;"><span>• Caissier</span></li>
+                <li style="padding-left: 30px;"><span>• Client</span></li>
+                <li style="padding-left: 30px;"><span>• Actionnaires</span></li>
+                <li><span>Transactions financières</span> <span>13 tables</span></li>
+                <li style="padding-left: 30px;"><span>• Transactions, Prets, Echeances_Pret, ...</span></li>
+                <li><span>Sécurité & Audit</span> <span>2 tables</span></li>
+                <li style="padding-left: 30px;"><span>• Audit_Logs, IPs_Bloquees</span></li>
+                <li><span>Configuration</span> <span>2 tables</span></li>
+                <li style="padding-left: 30px;"><span>• Parametres_Systeme, Depenses</span></li>
+                <li><span>Tests & QA</span> <span>3 tables</span></li>
+                <li style="padding-left: 30px;"><span>• Tests_Flux, Tests_Executions, Tests_Resultats_Detail</span></li>
+                <li><span class="badge">TOTAL: 27 tables</span></li>
+            </ul>
+        </div>
+
+        <div class="tabs">
+            <h3>🔐 Identifiants par Défaut</h3>
+            <div class="file-list">
+                <div style="padding: 15px; background: #f0f4ff; border-radius: 6px;">
+                    <strong>Admin Initial</strong><br>
+                    Téléphone: <code>+243000000000</code><br>
+                    Mot de passe: <code>ATF@Admin2025</code><br>
+                    Rôle: <code>super_admin</code><br>
+                    <br>
+                    <span style="color: red; font-weight: bold;">⚠️ À CHANGER IMMÉDIATEMENT après première connexion !</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <h3>💡 Points Importants</h3>
+            <ul class="file-list">
+                <li>✓ Devise : CDF et USD (soldes séparés, pas de conversion auto)</li>
+                <li>✓ Prêts : 9 statuts progressifs</li>
+                <li>✓ Placements : Calcul auto des intérêts</li>
+                <li>✓ Commissions : 1% retrait, 0.5% virement</li>
+                <li>✓ Audit : Toutes les actions tracées</li>
+                <li>✓ Sécurité : Mots de passe bcrypt, blocage IP</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>✅ Reconstruction de base de données | African Trust Fund | 14 Novembre 2024 | v1.0</p>
+            <p>📧 Tous les fichiers sont accessibles à partir du répertoire racine du projet</p>
+        </footer>
+    </div>
+</body>
+</html>

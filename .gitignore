@@ -1,0 +1,37 @@
+# Dossiers et fichiers à ignorer
+node_modules/
+vendor/
+.env
+.env.local
+.DS_Store
+*.log
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-*
+.cache/
+dist/
+build/
+.git/
+african/
+
+# Fichiers temporaires
+tmp/
+temp/
+*.tmp
+
+# Base de données
+*.sql
+database/backup/
+
+# Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Dépendances
+composer.lock
+package-lock.json
+yarn.lock
